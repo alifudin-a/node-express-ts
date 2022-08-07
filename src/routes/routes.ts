@@ -1,3 +1,3 @@
-import router from "../http/rest/todo/list";
+import router from "../controllers/todo";
 
 export default router
