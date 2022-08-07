@@ -1,2 +1,2 @@
 # node-express-ts
-Belajar NodeJ + ExpressJs + TypeScript (Todo App)
+Belajar NodeJS + ExpressJS + TypeScript (Todo App)
