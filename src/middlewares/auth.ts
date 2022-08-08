@@ -3,8 +3,7 @@ import { Request, Response } from "express";
 
 const verifyToken = (req: Request, res: Response, next: any) => {
   const token = req.headers["x-access-token"];
-  console.log("token: ", token)
-
+  
   if (!token) {
     return res.status(403).json({
       code: 403,
