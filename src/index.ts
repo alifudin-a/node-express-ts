@@ -2,13 +2,14 @@ import express, { Express } from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 dotenv.config();
-import router from "./routes/routes";
+import { todo, auth } from "./routes/routes";
 
 const app: Express = express();
 
-app.use(bodyParser.json())
-app.use(router);
+app.use(bodyParser.json());
+app.use("/api/v1", todo);
+app.use("/api/v1/auth", auth);
 
 app.listen(process.env.APP_PORT, () => {
-  console.log("app started on port: 5000");
+  console.log("App started on port: " + process.env.APP_PORT);
 });
