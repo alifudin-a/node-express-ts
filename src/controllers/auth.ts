@@ -24,7 +24,7 @@ router.post("/login", async (req: Request, res: Response) => {
     });
   } else {
     bcrypt
-      .compare(password, data.password)
+      .compare(password, data.password as string)
       .then((result: boolean) => {
         if (result) {
           // jwt
