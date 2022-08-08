@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/login", async (req: Request, res: Response) => {
   let username: string = req.body.username;
   let password: string = req.body.password;
-  
+
   const data = await login(username);
   if (!data) {
     res.json({
@@ -22,7 +22,12 @@ router.post("/login", async (req: Request, res: Response) => {
           res.json({
             code: 200,
             message: "Login berhasil!",
-            data: data,
+            data: {
+              user: {
+                username: data.username,
+                role: data.role,
+              },
+            },
           });
         } else {
           res.json({
