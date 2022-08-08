@@ -9,8 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/todos", async (req: Request, res: Response) => {
-  const data = await getTodos();
-
+  const data: Object = await getTodos();
   res.json({
     code: 200,
     message: "Berhasil mendapatkan data todos!",
@@ -22,23 +21,38 @@ router.get("/todos", async (req: Request, res: Response) => {
 
 router.get("/todo/:id", async (req: Request, res: Response) => {
   let id: Number = parseInt(req.params.id);
-  const data = await getTodo(id);
-  res.json({
-    code: 200,
-    message: "Berhasilkan mendapatkan data todo!",
-    body: {
-      todo: data,
-    },
-  });
+  const data: Object = await getTodo(id);
+  if (!data) {
+    res.json({
+      code: 400,
+      message: "Data todo tidak ditemukan!",
+    });
+  } else {
+    res.json({
+      code: 200,
+      message: "Berhasilkan mendapatkan data todo!",
+      body: {
+        todo: data,
+      },
+    });
+  }
 });
 
 router.delete("/todo/:id", async (req: Request, res: Response) => {
   let id: Number = parseInt(req.params.id);
-  await deleteTodo(id);
-  res.json({
-    code: 200,
-    message: "Berhasil mengahpus data todo!",
-  });
+  const data: Object = await getTodo(id);
+  if (!data) {
+    res.json({
+      code: 400,
+      message: "Data todo tidak ditemukan!",
+    });
+  } else {
+    await deleteTodo(id);
+    res.json({
+      code: 200,
+      message: "Berhasil mengahapus data todo!",
+    });
+  }
 });
 
 router.post("/todo", async (req: Request, res: Response) => {
@@ -46,7 +60,7 @@ router.post("/todo", async (req: Request, res: Response) => {
   let isDone: Boolean = req.body.is_done;
   let owner: Number = req.body.owner;
 
-  const data = await createTodo(task, isDone, owner);
+  const data: Object = await createTodo(task, isDone, owner);
   res.json({
     code: 200,
     message: "Berhasilkan menambahkan data todo!",
@@ -61,14 +75,22 @@ router.put("/todo", async (req: Request, res: Response) => {
   let task: String = req.body.task;
   let isDone: Boolean = req.body.is_done;
 
-  const data = await updateTodo(id, task, isDone);
-  res.json({
-    code: 200,
-    message: "Berhasilkan mengubah data todo!",
-    body: {
-      todo: data,
-    },
-  });
+  const exist: Object = await getTodo(id);
+  if (!exist) {
+    res.json({
+      code: 400,
+      message: "Data todo tidak ditemukan!",
+    });
+  } else {
+    const data = await updateTodo(id, task, isDone);
+    res.json({
+      code: 200,
+      message: "Berhasilkan mengubah data todo!",
+      body: {
+        todo: data,
+      },
+    });
+  }
 });
 
 export default router;

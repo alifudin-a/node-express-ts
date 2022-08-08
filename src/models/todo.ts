@@ -18,7 +18,7 @@ const getTodo = async (id: Number): Promise<any> => {
   }
 };
 
-const deleteTodo = async (id: Number): Promise<any> => {
+const deleteTodo = async (id: Number) => {
   try {
     await psql.query("DELETE FROM todos WHERE id = $1", [id]);
   } catch (err) {

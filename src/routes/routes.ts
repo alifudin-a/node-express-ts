@@ -1,3 +1,4 @@
-import router from "../controllers/todo";
+import todo from "../controllers/todo";
+import auth from "../controllers/auth"
 
-export default router
+export {todo, auth}
